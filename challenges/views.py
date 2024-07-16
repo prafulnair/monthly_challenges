@@ -40,3 +40,7 @@ def monthly_challenges_number(request, month):
     # basically construct a url dynamically like /challenge/january 
     
     return HttpResponseRedirect(redirect_path)
+
+
+def index(request):
+    return HttpResponse("Welcome to Monthly Challenges Page")
