@@ -23,11 +23,12 @@ challenges_data = {
 }
 
 def monthly_challenges(request, month):
-    if month.lower() in challenges_data:
-        return HttpResponse(challenges_data[month.lower()])
-    
-    else:
-        return HttpResponseNotFound("This month is not Supported")
+    try:
+        challenge_text = challenges_data[month]
+        response_data = f"<h1>{challenge_text}</h1>"
+        return HttpResponse(response_data)
+    except:
+        return HttpResponseNotFound("<h1>Enter a valid Month or Month Number</h1>")
     
 
 
@@ -38,7 +39,4 @@ def monthly_challenges_number(request, month):
     redirect_path = reverse("month-challenge", args=[month_num]) 
     # basically construct a url dynamically like /challenge/january 
     
-    try:
-        return HttpResponseRedirect(redirect_path)
-    except:
-        return HttpResponseNotFound("Enter a valid month or month Number")
+    return HttpResponseRedirect(redirect_path)
