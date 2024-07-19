@@ -5,8 +5,6 @@ from django.urls import reverse # for dynamic redirection of urls
 # HttpResponseRedirect - for redirection of the url
 
 # Create your views here.
-
-
 challenges_data = {
     "january": "walk everyday for 30 mins",
     "february": "dont w",
@@ -21,6 +19,21 @@ challenges_data = {
     "november": "Thank god",
     "december": "celebrate christmas"
 }
+
+## For \challenges\ 
+def index(request):
+    
+    list_items = ""
+    months = list(challenges_data.keys())
+
+    for month in months:
+        month_path = reverse("month-challenge",args=[month])
+        list_items += f"<li><a href = \"{month_path}\"><h1>{month.capitalize()}<h1></a></li>"
+
+    response_data = f"<ul>{list_items}</ul>"
+    return HttpResponse(response_data)
+
+
 
 def monthly_challenges(request, month):
     try:
@@ -42,5 +55,3 @@ def monthly_challenges_number(request, month):
     return HttpResponseRedirect(redirect_path)
 
 
-def index(request):
-    return HttpResponse("Welcome to Monthly Challenges Page")
